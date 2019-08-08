@@ -76,7 +76,7 @@ class discriminator(nn.Module):
             nn.Conv2d(128, 256, kernel_size=3, stride=2),
             nn.BatchNorm2d(256),
             nn.ReLU(),
-            nn.Conv2d(256, 512, kernel_size=3, stride=2),
+            nn.Conv2d(256, 512, kernel_size=3, stride=1),
             nn.BatchNorm2d(512),
             nn.ReLU(),
             nn.Dropout(p=0.5)
@@ -89,6 +89,7 @@ class discriminator(nn.Module):
     def forward(self, x):
         for ele in self.layers:
             x = ele(x)
+            print('DIM_OF_D',x.shape)
         x = x.view(-1, 4*4*512)
         x = self.fc(x)
         x = self.active(x)
